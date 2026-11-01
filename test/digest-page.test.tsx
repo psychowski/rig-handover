@@ -60,4 +60,15 @@ describe('digest page', () => {
     expect(response.status).toBe(200);
     expect(html).toContain('nothing ran');
   });
+
+  it('reports malformed lines in the night file', async () => {
+    writeFileSync(join(runsDir, '2026-10-28.jsonl'), '{bad json\n');
+
+    const response = await createApp(config()).request('/digest/2026-10-28');
+    const html = await response.text();
+
+    expect(response.status).toBe(200);
+    expect(html).toContain('malformed lines: 1');
+    expect(html).toContain('nothing ran');
+  });
 });

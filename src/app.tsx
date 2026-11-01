@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { loadConfig, type RigConfig } from './config.js';
 import { readNight } from './digest/types.js';
+import { digestApi } from './digest/routes.js';
 import { lane } from './lane.js';
 import { readStatus } from './status.js';
 import { DigestPage } from './views/digest.js';
@@ -9,6 +10,8 @@ import { StatusBoard } from './views/status.js';
 
 export function createApp(config: RigConfig = loadConfig()) {
   const app = new Hono();
+
+  app.route('/', digestApi(config));
 
   app.get('/health', (c) => c.json({ ok: true, lane: lane().id }));
 

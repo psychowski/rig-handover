@@ -22,6 +22,9 @@ in a shell this agent can run.
    gh issue create --title "<title>" --body-file <tmp.md>
    ```
 
+   Ensure the required labels exist before issue creation. After each issue, record its URL
+   from gh's output and use `gh issue view` to verify its title, state, labels, and first body
+   line before creating the next dependent issue.
 6. Record every issue URL from gh's output (not from memory) and reply with the list.
 
 Closing one, with the closing comment from AGENTS.md:
